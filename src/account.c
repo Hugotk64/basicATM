@@ -46,3 +46,13 @@ void createAccount(Account **accounts, int *size) {
     printf("Account created successfully!\n");
     printf("Your account number is: %d\n", newAccount.accountNumber);
 }
+
+Account* login(Account *accounts, int size, int accNumber, int pin) {
+    // Check if the account number and PIN match any existing account
+    for (int i = 0; i < size; i++) {
+        if (accounts[i].accountNumber == accNumber && accounts[i].pin == pin) {
+            return &accounts[i];
+        }
+    }
+    return NULL;
+}

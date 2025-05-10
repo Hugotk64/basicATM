@@ -8,4 +8,8 @@ typedef struct {
     float balance;
 } Account;
 
+int generateAccountNumber(Account *account, int size);
+void createAccount(Account **accounts, int *size);
+Account* login(Account *accounts, int size, int accNumber, int pin);
+
 #endif
