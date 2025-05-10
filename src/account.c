@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../headers/account.h"
+#include "../headers/fileIO.h"
 
 int generateAccountNumber(Account *account, int size) {
     int accountNumber;
@@ -20,4 +22,27 @@ int generateAccountNumber(Account *account, int size) {
 
     } while (accountNumber == 0);
     return accountNumber;
+}
+
+void createAccount(Account **accounts, int *size) {
+    Account newAccount;
+    newAccount.accountNumber = generateAccountNumber(accounts, size);
+
+    printf("Enter your name: ");
+    fgets(newAccount.name, sizeof(newAccount.name), stdin);
+    newAccount.name[strcspn(newAccount.name, "\n")] = 0; // Remove newline character
+
+    printf("Enter your PIN: ");
+    scanf("%d", &newAccount.pin);
+    while (getchar() != '\n'); // Clear the input buffer
+
+    newAccount.balance = 0.0;
+
+    *accounts = realloc(*accounts, (*size + 1) * sizeof(Account));
+    (*accounts)[*size] = newAccount;
+    (*size)++;
+
+    saveAccounts(*accounts, *size);
+    printf("Account created successfully!\n");
+    printf("Your account number is: %d\n", newAccount.accountNumber);
 }
